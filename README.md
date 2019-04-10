@@ -1,23 +1,27 @@
 pgbackup
 ========
 
-Python 3.7 CLI for backing up remote PostgreSQL databases locally or to AWS S3.
+Python 3.7 CLI for backing up remote PostgreSQL databases locally or to AWS S3
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
+- [Setup](#setup)
 	- [Installation From Source](#installation-from-source)
 	- [Setup a sample PostgreSQL DB](#setup-a-sample-postgresql-db)
 	- [Preparing your Python Development Env](#preparing-your-python-development-env)
 - [Usage](#usage)
-- [Python Notes](#python-notes)
+- [Troubleshooting](#troubleshooting)
+	- [pgbackup - Running cli.py interactively to test parse_args](#pgbackup-running-clipy-interactively-to-test-parseargs)
+	- [pgbackup - Running pgdump.py interactively to test local backup.](#pgbackup-running-pgdumppy-interactively-to-test-local-backup)
+	- [pgbackup - Running storage.py interactively to test S3 backup.](#pgbackup-running-storagepy-interactively-to-test-s3-backup)
+	- [pgbackup - Using pdb to troubleshoot in interactive mode](#pgbackup-using-pdb-to-troubleshoot-in-interactive-mode)
+- [Python Packages](#python-packages)
 	- [Python - Creating this Package](#python-creating-this-package)
-		- [pgbackup - Running cli.py interactively to test parse_args](#pgbackup-running-clipy-interactively-to-test-parseargs)
-		- [pgbackup - Running pgdump.py interactively to test local backup.](#pgbackup-running-pgdumppy-interactively-to-test-local-backup)
-		- [pgbackup - Running storage.py interactively to test S3 backup.](#pgbackup-running-storagepy-interactively-to-test-s3-backup)
-		- [pgbackup - Using pdb to troubleshoot in interactive mode](#pgbackup-using-pdb-to-troubleshoot-in-interactive-mode)
 	- [Python - Creating Deployable Install File](#python-creating-deployable-install-file)
 
 <!-- /TOC -->
+# Setup
+Install this utility to backup your postgres data and setup your local environment so you can test and enhance as needed.
 
 ## Installation From Source
 
@@ -89,20 +93,9 @@ Local Example w/ local path:
 $ pgbackup postgres://dbadmin@example.com:5432/db1 --driver local /var/local/db1/backups
 ```
 
-# Python Notes
-## Python - Creating this Package
-```
-cd ./pgbackup
-mkdir -p src/pgbackup
-vi setup.py # create package setup.py
-touch src/pgbackup/__init__.py
-touch src/pgbackup/.gitkeep
-vi src/pgbackup/cli.py  # create initial CLI code.
-vi src/pgbackup/pgdump.py
-vi src/pgbackup/storage.py
-vi README.md
-```
-### pgbackup - Running cli.py interactively to test parse_args
+# Troubleshooting
+
+## pgbackup - Running cli.py interactively to test parse_args
 ```
 cd ./pgbackup
 python -i src/pgbackup/cli.py
@@ -114,7 +107,7 @@ args.driver
 args.destination
 parser.parse_args()
 ```
-### pgbackup - Running pgdump.py interactively to test local backup.
+## pgbackup - Running pgdump.py interactively to test local backup.
 ```
 cd ./pgbackup
 PYTHONPATH=./src python
@@ -125,7 +118,7 @@ f.write(dump.stdout.read())
 f.close()
 ```
 
-### pgbackup - Running storage.py interactively to test S3 backup.
+## pgbackup - Running storage.py interactively to test S3 backup.
 You should already have your ~/.aws/credentials properly setup,
 with write access to your bucket_name.  Login to the console and look for a new backup file after this test.
 ```
@@ -138,7 +131,7 @@ infile = open('example.txt', 'rb')
 storage.s3(client, infile, 'bucket_name', infile.name)
 ```
 
-### pgbackup - Using pdb to troubleshoot in interactive mode
+## pgbackup - Using pdb to troubleshoot in interactive mode
 You can iterate every step of yourScript.py in interactive mode by running `python -m pdb yourScript.py`.  Because your in interactive mode you can output or assign values at every step to see what your code is doing making this a good troubleshooting process.
 
 You can target specific loops and functions easily by including the library at the top of your script temporarily by adding:
@@ -158,6 +151,20 @@ a     # print current function args
 r     # continue until current function returns
 q     # quit
 
+```
+
+# Python Packages
+## Python - Creating this Package
+```
+cd ./pgbackup
+mkdir -p src/pgbackup
+vi setup.py # create package setup.py
+touch src/pgbackup/__init__.py
+touch src/pgbackup/.gitkeep
+vi src/pgbackup/cli.py  # create initial CLI code.
+vi src/pgbackup/pgdump.py
+vi src/pgbackup/storage.py
+vi README.md
 ```
 
 ## Python - Creating Deployable Install File
