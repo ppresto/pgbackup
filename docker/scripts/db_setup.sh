@@ -1,5 +1,10 @@
 #!/bin/sh
 
+<<COMMENT
+This top section is an LA example script to install Docker on CentOS7.
+For local development we will exclude this and assume you have Docker and access to dockerhub.
+The next section is useful for setting up a 1000 row DB called 'sample' so we will use this.
+# --------------------- #
 echo "Updating and installing Docker"
 sudo yum update -y
 sudo yum upgrade -y
@@ -23,10 +28,14 @@ echo "Starting and enabling Docker"
 sudo systemctl start docker
 sudo systemctl enable docker
 
+# ---------------------- #
+COMMENT
+
 echo "Configure database user"
 read -p "Postgres user name: " name
 read -s -p "Postgres user password: " password
-
+echo -e "\nRunning inital container 'postgres' from postgres:9.6.8-alpine"
+echo "Running with sudo...\n"
 export POSTGRES_USER=$name
 export POSTGRES_PASSWORD=$password
 

@@ -7,10 +7,18 @@ setup(
     name='pgbackup',
     version='0.1.0',
     author='patrick',
-    author_email='pgpresto@gmail.com'
+    author_email='pgpresto@gmail.com',
     description = 'A utility for backing up PostgreSQL db',
     long_description=long_description,
     long_description_content_type = 'text/markdown',
     url='https://github.com/ppresto/pgbackup',
-    packages=find_packages('src')
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    install_requires=['boto3'],
+    python_requires='>=3.6',
+    entry_points={
+        'console_scripts': [
+            'pgbackup=pgbackup.cli:main'
+        ],
+    }
 )
