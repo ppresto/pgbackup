@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 boto3 = "*"
-pgbackup = {editable = true,path = "."}
+pgbackup = {path = "./dist/pgbackup-0.1.0-py3-none-any.whl"}
 
 [requires]
 python_version = "3.7"

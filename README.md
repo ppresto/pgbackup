@@ -45,7 +45,7 @@ cd docker/scripts
 
 Test your connectivity with PostgreSQL client (psql)
 ```
-psql postgres://${USER}:${PASS}@localhost:80/sample -c "SELECT count(id) FROM employees;"
+psql postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:80/sample -c "SELECT count(id) FROM employees;"
 
 count
 -------
@@ -55,7 +55,7 @@ count
 You can do this same test using a docker container if you dont have the client locally installed.
 
 ```
-docker run -it --rm postgres psql postgres://${USER}:${PASS}@${MY_IP}:80/sample -c "SELECT count(id) FROM employees;"
+docker run -it --rm postgres psql postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${MY_IP}:80/sample -c "SELECT count(id) FROM employees;"
 ```
 
 ## Preparing your Python Development Env
@@ -66,7 +66,8 @@ Follow these steps to start developing with this project:
 
 1. Ensure `pip`, `pipenv`, and `awscli` are installed
 2. Clone repository: `git clone https://github.com/ppresto/pgbackup.git`
-3. `cd` into the repository
+3. `cd` into the repository (./pgbackup)
+4. Setup pipenv for new project only: `pipenv --python python3.7`
 4. Activate virtualenv: `pipenv shell`
 5. Install dependencies from Pipfile.lock: `pipenv install`
 6. (Optional) Install pgbackup CLI utility (from ./pgbackup): `pipenv install -e .`
